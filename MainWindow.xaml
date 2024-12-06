@@ -39,8 +39,7 @@
             <Grid>
             <Border CornerRadius="10,10,0,0" MouseDown="TopDrag" VerticalAlignment="Top" Height="30" Background="#FF42426D">
                 <Grid Name="TitleBar" Height="30" VerticalAlignment="Top">
-                    <Image Source="/ParoxIcon.ico"/>
-                    <TextBlock Text="C i n d e r I n j e c t o r" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#FFCECEEC"/>
+                    <TextBlock Text="P a r o x I n j e c t o r" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#FFCECEEC"/>
 
                     <TextBlock Text="Inject Info" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Global Monospace" Foreground="White" Margin="60,0,0,0"/>
 
