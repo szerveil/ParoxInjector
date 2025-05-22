@@ -22,7 +22,7 @@
 
 <p align="center"><b>There is a Process Filter, System Processes or games that will ban for Memory Injecting, not EVERY game is included.</b></p>
 
-<p align="center"><b>It's open source, you can build your own version without those restrictions. "excludedProcesses" list at the bottom of ProcessListManager Class manages these app restrictions, or you can add restrictions if there are extra windows I don't have marked that you have open in the background.</b></p>
+<p align="center"><b>It's open source, you can build your own version without those restrictions. ProcessListManager Class manages these app restrictions.</b></p>
 
 <p align="center"><b>Any Issues you have can be submitted in the "Issues" tab above. If you have any ideas, you can submit a "Feature Request".</b></p>
 
