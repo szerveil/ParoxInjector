@@ -16,6 +16,12 @@ Not much changed yet, changes are TBA to this list
     <td>Net 8.0 Release</td>
     <td>ProcessFilter refined for Windows 11 System processes and added a couple 3rd party apps.</td>
   </tr>
+  <tr>
+    <td>Net 8.0 Release</td>
+  </tr>
+  <tr>
+   <td>ProcessFilter refined for Windows 11 System processes and added a couple 3rd party apps.</td>
+  </tr>
 </table>
 
 Child Processes are included, you will only see these in Microsoft Store apps. These processes have to be hijacked by Injecting to the Child Processes as Injecting on the Parent Process will not work or crash the process. **These processes are usually marked by "AppxWindow"**
