@@ -1,6 +1,6 @@
 # ParoxInjector
 <div align="center">
-  <img src="https://cdn.discordapp.com/attachments/883362583132909678/1374937407811751936/ParoxIcon.png?ex=682fddbf&is=682e8c3f&hm=e3cb3badc1c771cf2052c353cba3d2b0a94b72e6094833ff24a906cb589e1a3e&">
+  <img src="https://github.com/user-attachments/assets/36f5e262-5f86-4e33-b448-c74c6199284e">
 </div>
 
 <p align="center"><b>RELEASE 2 TOMORROW</b></p>
