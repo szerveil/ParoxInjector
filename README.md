@@ -1,4 +1,11 @@
 # ParoxInjector
+**RELEASE 2 TOMORROW**
+Not much changed yet, changes are TBA to this list 
+
+> New Icon
+> Net 8.0 Release
+> ProcessFilter refined for Windows 11 System Processes and added a couple 3rd party apps.
+
 Child Processes are included, you will only see these in Microsoft Store apps. These processes have to be hijacked by Injecting to the Child Processes as Injecting on the Parent Process will not work or crash the process. **These processes are usually marked by "AppxWindow"**
 
 **There are specific restrictions to injected apps, System Processes or games that will ban for Memory Injecting, not EVERY game is included.**
