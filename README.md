@@ -13,8 +13,6 @@ Not much changed yet, changes are TBA to this list
   </tr>
   <tr>
     <td>New Icon</td>
-    <td>Net 8.0 Release</td>
-    <td>ProcessFilter refined for Windows 11 System processes and added a couple 3rd party apps.</td>
   </tr>
   <tr>
     <td>Net 8.0 Release</td>
