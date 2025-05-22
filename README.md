@@ -1,4 +1,3 @@
-# ParoxInjector
 <div align="center">
   <img src="https://github.com/user-attachments/assets/36f5e262-5f86-4e33-b448-c74c6199284e">
 </div>
