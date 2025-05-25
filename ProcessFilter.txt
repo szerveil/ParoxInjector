@@ -111,7 +111,7 @@ robloxcrashhandler
 robloxplayer
 robloxplayerbeta
 rockstarerrorhandler
-rockstartservice
+rockstarservice
 rsappui
 rsclientsvc
 rsdnsclientsvc
@@ -221,3 +221,5 @@ wudfhost
 xboxgamebarspotify
 xboxpcappft
 xgamehelper
+launcher
+crashpad_handler
