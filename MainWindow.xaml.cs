@@ -1,9 +1,9 @@
+using ParoxInjector.Classes;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using ParoxInjector.Classes;
 
 namespace ParoxInjector
 {
@@ -12,71 +12,64 @@ namespace ParoxInjector
         public MainWindow()
         {
             InitializeComponent();
-            this.ContentRendered += RefreshRecents;
-            this.ContentRendered += ShowProcessList;
-            this.ContentRendered += LogIfDebug;
-            this.Closing += WindowClosing;
+            this.ContentRendered += ONCONTENTRENDERED;
+            this.Closing += WINDOWCLOSING;
         }
 
         // No extra functions, PLM.RefreshProcessList() is for Refresh touchDelegate event
-        private void ShowProcessList(object? sender, EventArgs e) => ProcessListManager.ShowProcessList(this);
-        private void RefreshProcessList(object sender, RoutedEventArgs e) => ProcessListManager.RefreshProcessList(sender, e, this);
-        private void WindowClosing(object? sender, CancelEventArgs e) => DebugFile.Insert($"[Window] Window Closed {DateTime.Now}");
-        private void LogIfDebug(object? sender, EventArgs e)
-        {
-            if (!DebugFile.WasDebugWrote())
-            {
-                DebugFile.Clear();
-                DebugFile.Insert($"[DebugFile] Window Loaded without errors. {DateTime.Now}");
-            }
+        private Task UPDATEPROCESSFILTER(object? SENDER, EventArgs EVENTARGS) => ProcessListManager.UPDATEPROCESSFILTER();
+        private void SHOW(object? SENDER, EventArgs EVENTARGS) => ProcessListManager.SHOW(this);
+        private void REFRESH(object SENDER, RoutedEventArgs EVENTARGS) => ProcessListManager.REFRESH(SENDER, EVENTARGS, this);
+        private void WINDOWCLOSING(object? SENDER, CancelEventArgs EVENTARGS) => DebugFile.INSERT($"[Window] Window Closed {DateTime.Now}");
+        private void DEBUGC(object? SENDER, EventArgs EVENTARGS) {
+            if (!DebugFile.DEBUGC()) DebugFile.INSERT($"[Window] Loaded without errors. {DateTime.Now}");
         }
 
-        private void ProcessList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (ProcessList.SelectedItem != null)
-            {
-                var listBoxItem = ProcessList.SelectedItem as ListBoxItem;
-                if (listBoxItem != null)
-                {
-                    var processInfo = listBoxItem.Tag as ProcessInfo;
-                    if (processInfo != null)
-                    {
-                        ProcessId.Text = processInfo.ProcessId.ToString();
-                        ProcessName.Text = processInfo.ProcessName;
-                        ProcessListManager.ShowProcessList(this);
+        private async void ONCONTENTRENDERED(object? SENDER, EventArgs EVENTARGS) {
+            await UPDATEPROCESSFILTER(SENDER, EVENTARGS);
+            REFRESH(SENDER, EVENTARGS);
+            SHOW(SENDER, EVENTARGS);
+            DEBUGC(SENDER, EVENTARGS);
+        }
+
+        private void PROCESSLIST_SELECTIONCHANGED(object SENDER, SelectionChangedEventArgs SELECTIONCHANGEDEVENTARGS) {
+            if (PROCESSLIST.SelectedItem is not null) {
+                var ITEM = PROCESSLIST.SelectedItem as ListBoxItem;
+
+                if (ITEM is not null) {
+                    var PROCESSINFO = ITEM.Tag as ProcessInfoClass;
+                    if (PROCESSINFO is not null) {
+                        PROCESSID.Text = PROCESSINFO.PROCESSID.ToString();
+                        PROCESSNAME.Text = PROCESSINFO.PROCESSNAME;
+                        ProcessListManager.SHOW(this);
                     }
                 }
             }
         }
 
-        private void LoadDLL(object sender, RoutedEventArgs e) => DLLContentManager.LoadDLL(sender, e, this);
-        private void RefreshRecents(object? sender, EventArgs e) => DLLContentManager.RefreshRecents(this);
-        private void InjectDLL(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                int processID = int.Parse(ProcessId.Text);
-                string processName = ProcessName.Text;
-                string dllPath = DLLPath.Text;
+        private void LOAD(object SENDER, RoutedEventArgs ROUTEDEVENTARGS) => DLLContentManager.LOAD(SENDER, ROUTEDEVENTARGS, this);
+        private void REFRESH(object? SENDER, EventArgs EVENTARGS) => DLLContentManager.REFRESH(this);
+        private void INJECT(object SENDER, RoutedEventArgs ROUTEDEVENTARGS) {
+            try {
+                int PROCESSID = int.Parse(this.PROCESSID.Text);
+                string PROCESSNAME = this.PROCESSNAME.Text;
+                string DLLPATH = this.DLLPATH.Text;
 
-                if(Process.GetProcessById(processID) == null)
-                {
-                    ProcessListManager.ShowProcessList(this);
-                    Process.GetProcessesByName(processName);
+                if (Process.GetProcessById(PROCESSID) is null) {
+                    ProcessListManager.SHOW(this);
+                    Process.GetProcessesByName(PROCESSNAME);
                 }
 
-                InjectManager injectManager = new InjectManager();
-                injectManager.InjectDLL(processID, dllPath);
-            }
-            catch (Exception ex)
-            {
-                DebugFile.Insert($"[InjectManager] Failed to inject {DateTime.Now}\n[InjectManager] Error: {ex.Message}");
-                MessageBox.Show($"Error: {ex.Message}");
+                InjectManager INJECTMANAGER = new InjectManager();
+                INJECTMANAGER.LOAD(PROCESSID, DLLPATH);
+            } catch (Exception EXCEPTION) {
+                DebugFile.INSERT($"[InjectManager] Failed to inject {DateTime.Now}\n[InjectManager] Error: {EXCEPTION.Message}");
+                MessageBox.Show($"Error: {EXCEPTION.Message}");
             }
         }
 
-        private void TopDrag(object sender, MouseButtonEventArgs e) => WindowContentManager.TopDrag(sender, e, this);
-        private void Minimize(object sender, RoutedEventArgs e) => WindowContentManager.Minimize(sender, e, this);
-        private void Close(object sender, RoutedEventArgs e) => WindowContentManager.Close(sender, e, this);
+        private void TOPDRAG(object SENDER, MouseButtonEventArgs MOUSEBUTTONEVENTARGS) => WindowContentManager.TOPDRAG(SENDER, MOUSEBUTTONEVENTARGS, this);
+        private void MINIMIZE(object SENDER, RoutedEventArgs ROUTEDEVENTARGS) => WindowContentManager.MINIMIZE(SENDER, ROUTEDEVENTARGS, this);
+        private void CLOSE(object SENDER, RoutedEventArgs ROUTEDEVENTARGS) => WindowContentManager.CLOSE(SENDER, ROUTEDEVENTARGS, this);
     }
 }
