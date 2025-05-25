@@ -96,7 +96,6 @@ paroxinjector
 parsecd
 perfwatson2
 phoneexperiencehost
-playrdr2
 presentationfontcache
 pservice
 razer central
