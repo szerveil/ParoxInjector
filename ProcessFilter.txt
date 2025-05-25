@@ -1,24 +1,38 @@
+afwserv
 aggregatorhost
+antimatter dimensions
 applicationframehost
 audiodg
+autoclicker-3.0
+avdump
 backgroundtaskhost
+cc_engine_x64
 cefsharp.browsersubprocess
+chxsmartscreen
 cloudflare warp
 comppkgsrv
 conhost
 copilot-language-server
+cortexlauncherservice
 crashhandler
+crossdeviceservice
 csrss
 ctfmon
+curseforge
 dashost
+dataexchangehost
+dcv2
 devenv
 discord
 dllhost
 dwm
+epicgameslauncher
 explorer
+filecoauth
 fontdrvhost
 gamebarpresencewriter
 gamemanagerservice
+gamemanagerservice3
 gameoverlayui
 gamingservices
 gamingservicesnet
@@ -26,9 +40,11 @@ idle
 iracingservice64
 jhi_service
 krita
+ledkeeper2
 lghub_agent
 lghub_system_tray
 lghub_updater
+lightkeeperservice
 logi_lamparray_service
 lsaiso
 lsass
@@ -38,14 +54,29 @@ mousocoreworker
 mpcmdrun
 mpdefendercoreservice
 mqrdcrashpadhandler
+ms-teams
 msbuild
 msedgewebview2
+msi.terminalserver
+msi_case_service
+msi_central_service
+msi_companion_service
+msiexec
 msmpeng
+mystic_light_service
+ngciso
 nissrv
+nlltoolssvc
+nortonsvc
+nortonui
 nvcontainer
 nvdisplay.container
+nvidia broadcast
 nvidia overlay
 nvsphelper64
+officeclicktorun
+onedrive
+overwolf
 ovrredir
 ovrserver_x64
 ovrservicelauncher
@@ -54,10 +85,12 @@ paroxinjector
 parsecd
 perfwatson2
 phoneexperiencehost
+presentationfontcache
 pservice
 razer central
 razer synapse 3
 razer synapse service
+razeraxon
 razercentralservice
 rdrleakdiag
 registry
@@ -65,8 +98,21 @@ remotedesktopcompanion
 robloxcrashhandler
 robloxplayer
 robloxplayerbeta
+rsappui
+rsclientsvc
+rsdnsclientsvc
+rsdnsresolver
+rsdnssvc
+rsedrsvc
+rsenginesvc
+rssyncsvc
 rstmwservice
+rsvpnclientsvc
+rsvpnsvc
+rswsc
+rtkauduservice64
 rtkbtmanserv
+rtkuwp
 runtimebroker
 rzappmanager
 rzbtlemanager
@@ -78,6 +124,8 @@ rziotdevicemanager
 rzsdkserver
 rzsdkservice
 rzsmartlightingdevicemanager
+rzthxservice
+rzupdateengineservice
 searchapp
 searchfilterhost
 searchhost
@@ -88,6 +136,7 @@ secure system
 secure system
 securityhealthservice
 securityhealthsystray
+servicehost
 servicehub.datawarehousehost
 servicehub.host.anycpu
 servicehub.host.dotnet.x64
@@ -132,9 +181,12 @@ vctip
 vcxprojreader
 virtualdesktop.service
 virtualdesktop.streamer
+vpnsvc
 vshost
 wallpaper32
 warp-svc
+weatherzeroservice
+wheelcompatabilityservice
 widgets
 widgetservice
 windows10universal
@@ -142,6 +194,9 @@ wininit
 winlogon
 wmiprvse
 wmiregistrationservice
+wsc_proxy
 wslservice
 wudfhost
+xboxgamebarspotify
+xboxpcappft
 xgamehelper
