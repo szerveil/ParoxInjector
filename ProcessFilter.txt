@@ -18,6 +18,7 @@ copilot
 copilot-language-server
 cortexlauncherservice
 crashhandler
+crashpad_handler
 crossdeviceresume
 crossdeviceservice
 csrss
@@ -46,6 +47,7 @@ idle
 iracingservice64
 jhi_service
 krita
+launcher
 ledkeeper2
 lghub_agent
 lghub_system_tray
@@ -203,6 +205,7 @@ virtualdesktop.streamer
 vpnsvc
 vshost
 wallpaper32
+warp-cli
 warp-svc
 weatherzeroservice
 wheelcompatibilityservice
@@ -220,5 +223,3 @@ wudfhost
 xboxgamebarspotify
 xboxpcappft
 xgamehelper
-launcher
-crashpad_handler
