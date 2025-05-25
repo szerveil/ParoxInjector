@@ -2,6 +2,8 @@ afwserv
 aggregatorhost
 antimatter dimensions
 applicationframehost
+appvshnotify
+aswEngSrv
 audiodg
 autoclicker-3.0
 avdump
@@ -18,6 +20,7 @@ crashhandler
 crossdeviceservice
 csrss
 ctfmon
+curse.agent.host
 curseforge
 dashost
 dataexchangehost
@@ -27,6 +30,7 @@ discord
 dllhost
 dwm
 epicgameslauncher
+epicwebhelper
 explorer
 filecoauth
 fontdrvhost
@@ -57,6 +61,7 @@ mqrdcrashpadhandler
 ms-teams
 msbuild
 msedgewebview2
+msi.centralserver
 msi.terminalserver
 msi_case_service
 msi_central_service
@@ -77,6 +82,9 @@ nvsphelper64
 officeclicktorun
 onedrive
 overwolf
+overwolfbrowser
+overwolfhelper
+overwolfhelper64
 ovrredir
 ovrserver_x64
 ovrservicelauncher
@@ -105,6 +113,7 @@ rsdnsresolver
 rsdnssvc
 rsedrsvc
 rsenginesvc
+rshelper
 rssyncsvc
 rstmwservice
 rsvpnclientsvc
@@ -124,6 +133,7 @@ rziotdevicemanager
 rzsdkserver
 rzsdkservice
 rzsmartlightingdevicemanager
+rzthxhelper
 rzthxservice
 rzupdateengineservice
 searchapp
@@ -173,6 +183,7 @@ tabtip
 taskhostw
 textinputhost
 translucenttb
+uihost
 unsecapp
 useroobebroker
 vbcscompiler
@@ -186,7 +197,7 @@ vshost
 wallpaper32
 warp-svc
 weatherzeroservice
-wheelcompatabilityservice
+wheelcompatibilityservice
 widgets
 widgetservice
 windows10universal
