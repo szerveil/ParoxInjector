@@ -14,9 +14,11 @@ chxsmartscreen
 cloudflare warp
 comppkgsrv
 conhost
+copilot
 copilot-language-server
 cortexlauncherservice
 crashhandler
+crossdeviceresume
 crossdeviceservice
 csrss
 ctfmon
@@ -49,6 +51,7 @@ lghub_agent
 lghub_system_tray
 lghub_updater
 lightkeeperservice
+lockapp
 logi_lamparray_service
 lsaiso
 lsass
@@ -93,6 +96,7 @@ paroxinjector
 parsecd
 perfwatson2
 phoneexperiencehost
+playrdr2
 presentationfontcache
 pservice
 razer central
@@ -106,6 +110,8 @@ remotedesktopcompanion
 robloxcrashhandler
 robloxplayer
 robloxplayerbeta
+rockstarerrorhandler
+rockstartservice
 rsappui
 rsclientsvc
 rsdnsclientsvc
@@ -165,6 +171,9 @@ shellhost
 sihost
 smartscreen
 smss
+socialclubhelper
+spacedeskservice
+spacedeskservicetray
 spoolsrv
 spoolsv
 spotify
@@ -201,6 +210,7 @@ wheelcompatibilityservice
 widgets
 widgetservice
 windows10universal
+windowscopilotruntimeactions
 wininit
 winlogon
 wmiprvse
@@ -211,8 +221,3 @@ wudfhost
 xboxgamebarspotify
 xboxpcappft
 xgamehelper
-spacedeskservice
-crossdeviceresume
-lockapp
-windowscopilotruntimeactions
-copilot
