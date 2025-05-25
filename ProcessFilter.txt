@@ -211,3 +211,8 @@ wudfhost
 xboxgamebarspotify
 xboxpcappft
 xgamehelper
+spacedeskservice
+crossdeviceresume
+lockapp
+windowscopilotruntimeactions
+copilot
