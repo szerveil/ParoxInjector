@@ -79,6 +79,7 @@ nissrv
 nlltoolssvc
 nortonsvc
 nortonui
+notepad
 nvcontainer
 nvdisplay.container
 nvidia broadcast
@@ -129,6 +130,7 @@ rswsc
 rtkauduservice64
 rtkbtmanserv
 rtkuwp
+rundll32
 runtimebroker
 rzappmanager
 rzbtlemanager
