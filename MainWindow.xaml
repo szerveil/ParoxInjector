@@ -2,7 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="ParoxInjector" Height="400" Width="720"
-        WindowStyle="None" AllowsTransparency="True" Background="Transparent" Topmost="True" ResizeMode="NoResize" Icon="/ParoxIcon.ico">
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent" Topmost="True" ResizeMode="NoResize">
     <Window.Resources>
         <ControlTemplate x:Key="ActionButtonTemplate" TargetType="Button">
             <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1">
@@ -36,16 +36,16 @@
         <Border.Clip>
             <RectangleGeometry Rect="0,0,720,400" RadiusX="15" RadiusY="15"/>
         </Border.Clip>
-            <Grid>
-            <Border CornerRadius="10,10,0,0" MouseDown="TopDrag" VerticalAlignment="Top" Height="30" Background="#FF42426D">
+        <Grid>
+            <Border CornerRadius="10,10,0,0" MouseDown="TOPDRAG" VerticalAlignment="Top" Height="30" Background="#FF42426D">
                 <Grid Name="TitleBar" Height="30" VerticalAlignment="Top">
                     <TextBlock Text="P a r o x I n j e c t o r" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#FFCECEEC"/>
 
                     <TextBlock Text="Inject Info" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Global Monospace" Foreground="White" Margin="60,0,0,0"/>
 
-                    <Button Content="🗕" Width="30" BorderBrush="{x:Null}" Background="{x:Null}" Click="Minimize" Foreground="#FFCECEEC" ToolTip="Minimize Window" HorizontalAlignment="Right" Margin="0,0,60,0"/>
+                    <Button Content="🗕" Width="30" BorderBrush="{x:Null}" Background="{x:Null}" Click="MINIMIZE" Foreground="#FFCECEEC" ToolTip="Minimize Window" HorizontalAlignment="Right" Margin="0,0,60,0"/>
                     <Button Content="🗖" Width="30" BorderBrush="{x:Null}" Background="{x:Null}" Foreground="#FFCECEEC" ToolTip="Disabled / Non resizeable" HorizontalAlignment="Right" Margin="0,0,30,0"/>
-                    <Button Content="✕" Width="30" BorderBrush="{x:Null}" Background="{x:Null}" Click="Close" Foreground="#FFCECEEC" ToolTip="Close Window" HorizontalAlignment="Right"/>
+                    <Button Content="✕" Width="30" BorderBrush="{x:Null}" Background="{x:Null}" Click="CLOSE" Foreground="#FFCECEEC" ToolTip="Close Window" HorizontalAlignment="Right"/>
                 </Grid>
             </Border>
             <Grid Margin="0,30,0,0" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
@@ -56,8 +56,8 @@
                         </VisualBrush.Visual>
                     </VisualBrush>
                 </Grid.OpacityMask>
- 
-                <ListBox Name="ProcessList"  HorizontalAlignment="Right" Margin="0,0,0,0" VerticalAlignment="Center" Width="500" SelectionChanged="ProcessList_SelectionChanged" Background="#FF5B5F97" Height="370" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+
+                <ListBox Name="PROCESSLIST"  HorizontalAlignment="Right" Margin="0,0,0,0" VerticalAlignment="Center" Width="500" SelectionChanged="PROCESSLIST_SELECTIONCHANGED" Background="#FF5B5F97" Height="370" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                     <ListBox.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="0,0,15,0"/>
@@ -69,23 +69,23 @@
                 </ListBox>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top">
                     <TextBlock Text="PID" Foreground="#FFCECEEC" FontFamily="Global Monospace"/>
-                    <TextBlock Name="ProcessId" Foreground="White" FontFamily="Global Monospace" Margin="10,0,0,0"/>
-                    <TextBlock Name="ProcessName" Visibility="Collapsed"/>
+                    <TextBlock Name="PROCESSID" Foreground="White" FontFamily="Global Monospace" Margin="10,0,0,0"/>
+                    <TextBlock Name="PROCESSNAME" Visibility="Collapsed"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="10,30,0,0" VerticalAlignment="Top">
                     <TextBlock Text="DLL" VerticalAlignment="Center" Foreground="#FFCECEEC" FontFamily="Global Monospace"/>
-                    <Image Name="DLLIcon" Width="32" Height="32" Margin="6,0,0,0"/>
-                    <TextBlock Name="DLLName" Foreground="White" FontFamily="Global Monospace" VerticalAlignment="Center"/>
-                    <TextBox Name="DLLPath" Visibility="Collapsed"/>
+                    <Image Name="DLLICON" Width="32" Height="32" Margin="6,0,0,0"/>
+                    <TextBlock Name="DLLNAME" Foreground="White" FontFamily="Global Monospace" VerticalAlignment="Center"/>
+                    <TextBox Name="DLLPATH" Visibility="Collapsed"/>
                 </StackPanel>
-                <StackPanel Name="RecentDLLContainer" HorizontalAlignment="Left" VerticalAlignment="Top" Width="215">
+                <StackPanel Name="RECENTDLLCONTAINER" HorizontalAlignment="Left" VerticalAlignment="Top" Width="215">
                     <TextBlock Text="Recent DLL(s)" Foreground="#FFCECEEC" FontFamily="Global Monospace" Margin="60,160,0,0" Background="#FF3A3238"/>
                     <TextBlock Text="______________________________" Foreground="#FFCECEEC" FontFamily="Global Monospace" Margin="0,0,0,0"/>
                 </StackPanel>
 
-                <Button Content="Refresh" Style="{StaticResource ActionButton}" Margin="0,0,10,10" Width="100" Click="RefreshProcessList" Height="24" HorizontalAlignment="Right" VerticalAlignment="Bottom" ToolTip="Refreshes process list"/>
-                <Button Content="Inject" Style="{StaticResource ActionButton}" Margin="0,0,120,10" Width="100" Click="InjectDLL" Height="24" HorizontalAlignment="Right" VerticalAlignment="Bottom" ToolTip="Injects DLL"/>
-                <Button Content="Load DLL" Style="{StaticResource ActionButton}" Margin="0,0,230,10" Width="100" Click="LoadDLL" Height="24" HorizontalAlignment="Right" VerticalAlignment="Bottom" ToolTip="Choose DLL to Inject"/>
+                <Button Content="Refresh" Style="{StaticResource ActionButton}" Margin="0,0,10,10" Width="100" Click="REFRESH" Height="24" HorizontalAlignment="Right" VerticalAlignment="Bottom" ToolTip="Refreshes process list"/>
+                <Button Content="Inject" Style="{StaticResource ActionButton}" Margin="0,0,120,10" Width="100" Click="INJECT" Height="24" HorizontalAlignment="Right" VerticalAlignment="Bottom" ToolTip="Injects DLL"/>
+                <Button Content="Load DLL" Style="{StaticResource ActionButton}" Margin="0,0,230,10" Width="100" Click="LOAD" Height="24" HorizontalAlignment="Right" VerticalAlignment="Bottom" ToolTip="Choose DLL to Inject"/>
             </Grid>
         </Grid>
     </Border>
