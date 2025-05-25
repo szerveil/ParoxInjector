@@ -1,32 +1,21 @@
 using System.IO;
 
-namespace ParoxInjector.Classes
-{
-    internal class DebugFile
-    {
-        static bool WroteDebug = false;
+namespace ParoxInjector.Classes {
+    internal class DebugFile {
+        static bool DEBUGFLAG = false;
 
-        public static void Insert(string logString)
-        {
-            if (!File.Exists("Debug.txt"))
-            {
-                File.WriteAllText("Debug.txt", logString);
-                WroteDebug = true;
+        public static void INSERT(string CONTENT) {
+            if (!File.Exists("Debug.txt")) {
+                File.WriteAllText("Debug.txt", CONTENT);
+                DEBUGFLAG = true;
                 return;
             }
 
-            File.AppendAllText("Debug.txt", $"\n{logString}");
-            WroteDebug = true;
+            File.AppendAllText("Debug.txt", $"\n{CONTENT}");
+            DEBUGFLAG = true;
         }
 
-        public static void Clear()
-        {
-            File.Delete("Debug.txt");
-        }
-
-        public static bool WasDebugWrote()
-        {
-            return WroteDebug;
-        }
+        public static void CLEAR() => File.Delete("Debug.txt");
+        public static bool DEBUGC() { return DEBUGFLAG; }
     }
 }
