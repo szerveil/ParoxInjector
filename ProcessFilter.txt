@@ -59,6 +59,7 @@ eaanticheat.gameservice
 eabackgroundservice
 eacefsubprocess
 eadesktop
+ealocalhostsvc
 epicgameslauncher
 epicwebhelper
 explorer
