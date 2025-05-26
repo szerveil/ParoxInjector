@@ -1,9 +1,27 @@
+aac3572mbhal_x86
+acpowernotification
 afwserv
 aggregatorhost
+amdfendrsr
 antimatter dimensions
 applicationframehost
 appvshnotify
+armouryaiofanserver
+armourycrate.service
+armourysocketserver
+armouryswagent
+asus_framework
+asusappservice
+asuscertservice
+asusoptimization
+asusosd
+asussoftwaremanager
+asusswitch
+asussystemdiagnosis
+asussytemanalysis
 aswEngSrv
+atiesrxx
+atkexcomsvc
 audiodg
 autoclicker-3.0
 avdump
@@ -31,13 +49,20 @@ dcv2
 devenv
 discord
 dllhost
+dtsapo4service
 dwm
+eaanticheat.gameservice
+eabackgroundservice
+eadesktop
 epicgameslauncher
 epicwebhelper
 explorer
 filecoauth
 fontdrvhost
+gamebar
+gamebarftserver
 gamebarpresencewriter
+gameinputsvc
 gamemanagerservice
 gamemanagerservice3
 gameoverlayui
@@ -52,6 +77,7 @@ ledkeeper2
 lghub_agent
 lghub_system_tray
 lghub_updater
+lightingservice
 lightkeeperservice
 lockapp
 logi_lamparray_service
@@ -59,6 +85,7 @@ lsaiso
 lsass
 memory compression
 microsoft.servicehub.controller
+microsoftedgeupdate
 mousocoreworker
 mpcmdrun
 mpdefendercoreservice
@@ -77,6 +104,7 @@ mystic_light_service
 ngciso
 nissrv
 nlltoolssvc
+noisecancelingengine
 nortonsvc
 nortonui
 notepad
@@ -114,6 +142,7 @@ robloxplayer
 robloxplayerbeta
 rockstarerrorhandler
 rockstarservice
+rogliveservice
 rsappui
 rsclientsvc
 rsdnsclientsvc
@@ -217,11 +246,13 @@ windows10universal
 windowscopilotruntimeactions
 wininit
 winlogon
+wmiapsrv
 wmiprvse
 wmiregistrationservice
 wsc_proxy
 wslservice
 wudfhost
 xboxgamebarspotify
+xboxgamebarwidgets
 xboxpcappft
 xgamehelper
