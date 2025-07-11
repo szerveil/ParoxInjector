@@ -82,6 +82,7 @@ gamingservices
 gamingservicesnet
 git-cmd
 idle
+intelsoftwareassetmanagerservice
 iracingservice64
 jhi_service
 jusched
