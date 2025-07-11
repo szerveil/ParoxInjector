@@ -55,6 +55,8 @@ dcv2
 devenv
 discord
 dllhost
+dsaservice
+dsaupdateservice
 dtsapo4service
 dwm
 eaanticheat.gameservice
@@ -82,6 +84,7 @@ git-cmd
 idle
 iracingservice64
 jhi_service
+jusched
 krita
 launcher
 ledkeeper2
@@ -143,6 +146,7 @@ perfwatson2
 phoneexperiencehost
 presentationfontcache
 pservice
+qtwebengineprocess
 razer central
 razer synapse 3
 razer synapse service
@@ -178,6 +182,7 @@ rundll32
 runtimebroker
 rzappmanager
 rzbtlemanager
+rzchromaconnectmanager
 rzchromaconnectserver
 rzchromastreamserver
 rzdevicemanager
@@ -215,6 +220,7 @@ services
 sgrmbroker
 shellexperiencehost
 shellhost
+signalrgblauncher
 sihost
 smartscreen
 smss
@@ -263,6 +269,9 @@ windowspackagemanagerserver
 windowsterminal
 wininit
 winlogon
+winrtutil32
+wlanext
+wmiadap
 wmiapsrv
 wmiprvse
 wmiregistrationservice
