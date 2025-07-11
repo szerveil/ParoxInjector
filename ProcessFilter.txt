@@ -35,6 +35,7 @@ cc_engine_x64
 cefsharp.browsersubprocess
 chxsmartscreen
 cloudflare warp
+cmd
 comppkgsrv
 conhost
 copilot
@@ -126,6 +127,7 @@ nvidia overlay
 nvsphelper64
 officeclicktorun
 onedrive
+openconsole
 overwolf
 overwolfbrowser
 overwolfhelper
@@ -257,6 +259,7 @@ widgetservice
 windows10universal
 windowscopilotruntimeactions
 windowspackagemanagerserver
+windowsterminal
 wininit
 winlogon
 wmiapsrv
