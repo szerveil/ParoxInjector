@@ -149,6 +149,7 @@ remotedesktopcompanion
 robloxcrashhandler
 robloxplayer
 robloxplayerbeta
+robloxstudiobeta
 rockstarerrorhandler
 rockstarservice
 rogliveservice
@@ -253,6 +254,7 @@ widgets
 widgetservice
 windows10universal
 windowscopilotruntimeactions
+windowspackagemanagerserver
 wininit
 winlogon
 wmiapsrv
