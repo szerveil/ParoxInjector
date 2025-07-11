@@ -65,6 +65,8 @@ epicgameslauncher
 epicwebhelper
 explorer
 filecoauth
+fl32
+fl64
 fontdrvhost
 gamebar
 gamebarftserver
