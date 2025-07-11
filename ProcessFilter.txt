@@ -78,6 +78,7 @@ gamemanagerservice3
 gameoverlayui
 gamingservices
 gamingservicesnet
+git-cmd
 idle
 iracingservice64
 jhi_service
