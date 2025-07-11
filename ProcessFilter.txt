@@ -30,6 +30,7 @@ audiodg
 autoclicker-3.0
 avdump
 backgroundtaskhost
+brightnesscontrol
 cc_engine_x64
 cefsharp.browsersubprocess
 chxsmartscreen
@@ -80,12 +81,14 @@ jhi_service
 krita
 launcher
 ledkeeper2
+lghub
 lghub_agent
 lghub_system_tray
 lghub_updater
 lightingservice
 lightkeeperservice
 lockapp
+logi_crashpad_handler
 logi_lamparray_service
 lsaiso
 lsass
