@@ -15,3 +15,8 @@
   <img src="https://github.com/user-attachments/assets/377463fa-dbd4-4b77-975a-c94712955f24">
 </div>
 
+# V2 UI Preview
+<h6 align="center">PAROXV2 IS UNIFINISHED ALONG WITH THE UI // SUBJECT TO CHANGE</h6>
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/a4e62701-1a81-4d7c-92d3-d42f4d42e4a2">
+</div>
