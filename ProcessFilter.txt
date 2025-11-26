@@ -80,6 +80,7 @@ gamemanagerservice
 gamemanagerservice3
 gameoverlay64
 gameoverlayui
+gameoverlayui64
 gamingservices
 gamingservicesnet
 git-cmd
@@ -251,6 +252,7 @@ textinputhost
 translucenttb
 uihost
 unsecapp
+updater
 useroobebroker
 vbcscompiler
 vcpkgsrv
