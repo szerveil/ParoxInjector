@@ -64,6 +64,7 @@ eabackgroundservice
 eacefsubprocess
 eadesktop
 ealocalhostsvc
+edgegameassist
 epicgameslauncher
 epicwebhelper
 explorer
@@ -77,6 +78,7 @@ gamebarpresencewriter
 gameinputsvc
 gamemanagerservice
 gamemanagerservice3
+gameoverlay64
 gameoverlayui
 gamingservices
 gamingservicesnet
@@ -103,6 +105,7 @@ lsass
 memory compression
 microsoft.servicehub.controller
 microsoftedgeupdate
+microsoftstartfeedprovider
 mousocoreworker
 mpcmdrun
 mpdefendercoreservice
@@ -262,8 +265,10 @@ warp-cli
 warp-svc
 weatherzeroservice
 wheelcompatibilityservice
+widgetboard
 widgets
 widgetservice
+windhawk
 windows10universal
 windowscopilotruntimeactions
 windowspackagemanagerserver
