@@ -69,6 +69,7 @@ epicgameslauncher
 epicwebhelper
 explorer
 filecoauth
+fishtrap
 fl32
 fl64
 fontdrvhost
