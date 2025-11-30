@@ -1,17 +1,17 @@
-using System.Diagnostics;
-using System.Text;
-using System.Windows.Controls;
-using System.Windows.Media.Imaging;
-using System.Windows.Media;
-using System.Windows;
-using System.Runtime.InteropServices;
-using System.Drawing;
-using System.Windows.Interop;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Drawing;
+using System.IO;
 using System.Management;
 using System.Net.Http;
-using System.IO;
 using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Interop;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 public class ProcessInfo
 {
@@ -47,6 +47,8 @@ public static class ProcessExtensions {
     }
 
     public static Process ParentProcess(this Process Process) {
+        if (Process == null) throw new ArgumentNullException(nameof(Process));
+
         int ParentProcessID;
         int ProcessID = Process.Id;
 
@@ -55,9 +57,7 @@ public static class ProcessExtensions {
             ParentProcessID = Convert.ToInt32(ManagementObject["ParentProcessId"]);
         }
 
-            Process ParentProcess = Process.GetProcessById(ParentProcessID) ?? null;
-
-        return ParentProcess;
+        try { return Process.GetProcessById(ParentProcessID); } catch (ArgumentException) { return null; }
     }
 }
 
@@ -77,14 +77,9 @@ namespace ParoxInjector.Classes {
     internal class FilterClass {
         private static string? FilterStrings;
         private static HashSet<string> FilterArray = [];
-        private static readonly string Filter = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? "", "ProcessFilter.txt");
-        private static void ClearFilterPass(MainWindow Window) {  Window.FilterPass.Items.Clear(); }
-        private static async Task PopulateFilterStrings()
-        {
-            try { 
-                FilterStrings = await new HttpClient().GetStringAsync("https://raw.githubusercontent.com/szerveil/ParoxInjector/refs/heads/main/ProcessFilter.txt"); 
-            } catch { return; }
-        }
+        private static readonly string? Filter = ParoxIO.fetchPath("ProcessFilter.txt");
+        private static void Clear(MainWindow Window) {  Window.FilterPass.Items.Clear(); }
+        private static async Task PopulateFilterStrings() { try { FilterStrings = await new HttpClient().GetStringAsync("https://raw.githubusercontent.com/szerveil/ParoxInjector/refs/heads/main/ProcessFilter.txt"); } catch { return; } }
 
         public static async Task PopulateFilter() {
             await PopulateFilterStrings();
@@ -92,8 +87,8 @@ namespace ParoxInjector.Classes {
             if (!File.Exists(Filter)) {
                 try {
                     await File.WriteAllTextAsync(Filter, FilterStrings);
-                    DBUG.INSERT($"[Filter] FilterStrings Populated.", DEBUGLOGLEVEL.INFO);
-                } catch { DBUG.INSERT($"[Filter] FilterStrings failed to Populate.", DEBUGLOGLEVEL.ERROR); }
+                    DBUG.INSERT($"FilterStrings Populated.", DEBUGLOGLEVEL.INFO);
+                } catch { DBUG.INSERT($"Local Process Filter loaded.", DEBUGLOGLEVEL.ERROR); }
             }
 
             if (File.Exists(Filter)) {
@@ -104,23 +99,23 @@ namespace ParoxInjector.Classes {
                         if (FilterStringsFile == FilterStrings) {
                             var FILTER = FilterStringsFile.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
                             FilterArray = new HashSet<string>(FILTER, StringComparer.OrdinalIgnoreCase);
-                            DBUG.INSERT($"[Filter] Local Process Filter loaded.", DEBUGLOGLEVEL.INFO);
+                            DBUG.INSERT($"Local Process Filter loaded.", DEBUGLOGLEVEL.INFO);
                         } else {
                             await File.WriteAllTextAsync(Filter, FilterStrings);
-                            DBUG.INSERT($"[Filter] Local Process Filter updated.", DEBUGLOGLEVEL.INFO);
+                            DBUG.INSERT($"Local Process Filter updated.", DEBUGLOGLEVEL.INFO);
 
                             var FILTER = FilterStrings.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
                             FilterArray = new HashSet<string>(FILTER, StringComparer.OrdinalIgnoreCase);
 
-                            DBUG.INSERT($"[Filter] Local Process Filter loaded.", DEBUGLOGLEVEL.INFO);
+                            DBUG.INSERT($"Local Process Filter loaded.", DEBUGLOGLEVEL.INFO);
                         }
                     } else {
                         var FILTER = FilterStringsFile.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
                         FilterArray = new HashSet<string>(FILTER, StringComparer.OrdinalIgnoreCase);
 
-                        DBUG.INSERT($"[Filter] Local Process Filter could not be updated.", DEBUGLOGLEVEL.WARNING);
-                        if (FILTER.Length > 0) DBUG.INSERT($"[ProcessListManager] Local Process Filter loaded.", DEBUGLOGLEVEL.INFO); 
-                        else DBUG.INSERT($"[Filter] Local Process Filter is empty.", DEBUGLOGLEVEL.WARNING);
+                        DBUG.INSERT($"Local Process Filter could not be updated.", DEBUGLOGLEVEL.WARNING);
+                        if (FILTER.Length > 0) DBUG.INSERT($"Local Process Filter loaded.", DEBUGLOGLEVEL.INFO); 
+                        else DBUG.INSERT($"Local Process Filter is empty.", DEBUGLOGLEVEL.WARNING);
 
                         MessageBox.Show("Local Process Filter update failed.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
@@ -129,13 +124,13 @@ namespace ParoxInjector.Classes {
         }
 
         public static async Task Refresh(MainWindow MAINWINDOW) {
-            ClearFilterPass(MAINWINDOW);
+            Clear(MAINWINDOW);
             if (FilterArray == (HashSet<string>) []) await PopulateFilter();
             await FilterPass(MAINWINDOW);
         }
 
         public static async Task RoutedRefresh(object SENDER, RoutedEventArgs ROUTEDEVENTARGS, MainWindow Window) {
-            ClearFilterPass(Window);
+            Clear(Window);
             if (FilterArray == (HashSet<string>) []) await PopulateFilter();
             await FilterPass(Window);
         }
