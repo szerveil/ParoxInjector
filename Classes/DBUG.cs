@@ -1,38 +1,34 @@
+using System.Diagnostics;
 using System.IO;
 
-namespace ParoxInjector.Classes
-{
-    internal class DBUG
-    {
+namespace ParoxInjector.Classes {
+    internal class DBUG {
         [Flags]
         public enum DEBUGFLAGS : byte { None = 0, Inserted = 1 }
         static DEBUGFLAGS DEBUGFLAG = DEBUGFLAGS.None;
 
         public static void INSERT(string MESSAGE, DEBUGLOGLEVEL LOGLEVEL) { INSERT(MESSAGE, LOGLEVEL, null); }
 
-        public static void INSERT(string MESSAGE, DEBUGLOGLEVEL LOGLEVEL, object? EXCEPTIONLOG)
-        {
-            if (!File.Exists("DEBUG.txt") || ParoxIO.read("DEBUG.txt") == string.Empty)
-            {
-                ParoxIO.write("DEBUG.txt", $"[{LOGLEVEL}] {MESSAGE} {DateTime.Now}");
+        public static void INSERT(string MESSAGE, DEBUGLOGLEVEL LOGLEVEL, object? EXCEPTIONLOG) {
+            var STACK = new StackTrace(1, true);
+            var STACKFRAME = STACK.GetFrame(1);
+            string DBUGCALLORIGIN = Path.GetFileName(STACKFRAME?.GetFileName() ?? "Unknown.cs");
+            if (!File.Exists("DEBUG.txt") || ParoxIO.read("DEBUG.txt") == string.Empty) {
+                ParoxIO.append("DEBUG.txt", $"[{LOGLEVEL}] [{DBUGCALLORIGIN}] {MESSAGE} {DateTime.Now}");
                 DEBUGFLAG = DEBUGFLAGS.Inserted;
                 return;
             }
 
             string? EXCEPTIONMESSAGE = (EXCEPTIONLOG is Exception EXCEPTION && !string.IsNullOrEmpty(EXCEPTION.Message)) ? EXCEPTIONMESSAGE = EXCEPTION.Message : null;
-            if (EXCEPTIONLOG is string STRING && !string.IsNullOrEmpty(STRING))
-            {
-                EXCEPTIONMESSAGE = STRING;
-            }
+            if (EXCEPTIONLOG is string STRING && !string.IsNullOrEmpty(STRING)) { EXCEPTIONMESSAGE = STRING; }
 
-            if (EXCEPTIONMESSAGE != null)
-            {
-                File.AppendAllText("DEBUG.txt", $"\n[{LOGLEVEL}] {MESSAGE} {DateTime.Now}\n[{LOGLEVEL}] {EXCEPTIONMESSAGE}");
+            if (EXCEPTIONMESSAGE != null) {
+                ParoxIO.append("DEBUG.txt", $"\n[{LOGLEVEL}] [{DBUGCALLORIGIN}] {MESSAGE} {DateTime.Now}\n[{LOGLEVEL}] {EXCEPTIONMESSAGE}");
                 DEBUGFLAG = DEBUGFLAGS.Inserted;
                 return;
             }
 
-            File.AppendAllText("DEBUG.txt", $"\n[{LOGLEVEL}] {MESSAGE} {DateTime.Now}");
+            ParoxIO.append("DEBUG.txt", $"\n[{LOGLEVEL}] [{DBUGCALLORIGIN}] {MESSAGE} {DateTime.Now}");
             DEBUGFLAG = DEBUGFLAGS.Inserted;
         }
 
