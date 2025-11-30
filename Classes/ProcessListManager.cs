@@ -13,12 +13,12 @@ using System.Net.Http;
 using System.IO;
 using System.Reflection;
 
-public class ProcessInfoClass
+public class ProcessInfo
 {
-    public int PROCESSID { get; set; }
-    public string? PROCESSNAME { get; set; }
-    public string? WINDOWTITLE { get; set; }
-    public Icon? ICON { get; set; }
+    public int ID { get; set; }
+    public string? Name { get; set; }
+    public string? Title { get; set; }
+    public Icon? Icon { get; set; }
 }
 
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
@@ -38,7 +38,7 @@ public static class ProcessExtensions {
         }
     }
 
-    public static Icon GETICON(this Process PROCESS) {
+    public static Icon GetIcon(this Process PROCESS) {
         try {
             string MAINMODULEFILENAME = PROCESS.GetMainModuleFileName();
             if (string.IsNullOrEmpty(MAINMODULEFILENAME)) return null;
@@ -46,78 +46,81 @@ public static class ProcessExtensions {
         } catch { return null; }
     }
 
-    public static Process GETPARENTPROCESS(this Process PROCESS) {
-        try {
-            int PARENTPID = 0;
-            int PROCESSPID = PROCESS.Id;
-            using (ManagementObject MANAGEMENTOBJECT = new ManagementObject($"win32_process.handle='{PROCESSPID}'")) {
-                MANAGEMENTOBJECT.Get();
-                PARENTPID = Convert.ToInt32(MANAGEMENTOBJECT["ParentProcessId"]);
-            }
+    public static Process ParentProcess(this Process Process) {
+        int ParentProcessID;
+        int ProcessID = Process.Id;
 
-            return Process.GetProcessById(PARENTPID);
-        } catch { return null; }
+        using (ManagementObject ManagementObject = new ManagementObject($"win32_process.handle='{ProcessID}'")) {
+            ManagementObject.Get();
+            ParentProcessID = Convert.ToInt32(ManagementObject["ParentProcessId"]);
+        }
+
+            Process ParentProcess = Process.GetProcessById(ParentProcessID) ?? null;
+
+        return ParentProcess;
     }
 }
 
 public static class IconUtilities {
     [DllImport("gdi32.dll", SetLastError = true)]
     private static extern bool DeleteObject(IntPtr hObject);
-    public static ImageSource BITMAPASIMAGESOURCE(this Bitmap ICON) {
-        IntPtr BITMAP = ICON.GetHbitmap();
-        ImageSource IMAGE = Imaging.CreateBitmapSourceFromHBitmap(BITMAP, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
-        if (!DeleteObject(BITMAP)) throw new Win32Exception();
+    public static ImageSource CONVERT(this Bitmap Icon) {
+        IntPtr IconBitmap = Icon.GetHbitmap();
+        ImageSource Image = Imaging.CreateBitmapSourceFromHBitmap(IconBitmap, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+        if (!DeleteObject(IconBitmap)) throw new Win32Exception();
 
-        return IMAGE;
+        return Image;
     }
 }
 
 namespace ParoxInjector.Classes {
-    internal class ProcessListManager {
-        private static HashSet<string>? PROCESSFILTER;
-        private static readonly string FILTERFILE = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? "", "ProcessFilter.txt");
+    internal class FilterClass {
+        private static string? FilterStrings;
+        private static HashSet<string> FilterArray = [];
+        private static readonly string Filter = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? "", "ProcessFilter.txt");
+        private static void ClearFilterPass(MainWindow Window) {  Window.FilterPass.Items.Clear(); }
+        private static async Task PopulateFilterStrings()
+        {
+            try { 
+                FilterStrings = await new HttpClient().GetStringAsync("https://raw.githubusercontent.com/szerveil/ParoxInjector/refs/heads/main/ProcessFilter.txt"); 
+            } catch { return; }
+        }
 
-        public static void CLEARPROCESSLIST(MainWindow MAINWINDOW) { MAINWINDOW.PROCESSLIST.Items.Clear(); }
+        public static async Task PopulateFilter() {
+            await PopulateFilterStrings();
 
-        public static async Task UPDATEPROCESSFILTER() {
-            string? GITHUBFILTER;
-
-            try { GITHUBFILTER = await new HttpClient().GetStringAsync("https://raw.githubusercontent.com/szerveil/ParoxInjector/refs/heads/main/ProcessFilter.txt"); } catch { GITHUBFILTER = null; }
-
-            if(!File.Exists(FILTERFILE)) {
+            if (!File.Exists(Filter)) {
                 try {
-                    await File.WriteAllTextAsync(FILTERFILE, GITHUBFILTER);
-                    DebugFile.INSERT($"[ProcessListManager] Local Process Filter created.");
-                } catch { DebugFile.INSERT($"[ProcessListManager] Local Process Filter creation failed."); }
+                    await File.WriteAllTextAsync(Filter, FilterStrings);
+                    DBUG.INSERT($"[ProcessListManager] FilterStrings Populated.", DEBUGLOGLEVEL.INFO);
+                } catch { DBUG.INSERT($"[ProcessListManager] FilterStrings failed to Populate.", DEBUGLOGLEVEL.ERROR); }
             }
 
-            if (File.Exists(FILTERFILE)) {
+            if (File.Exists(Filter)) {
                 try {
-                    string LOCALFILTER = await File.ReadAllTextAsync(FILTERFILE);
+                    string FilterStringsFile = await File.ReadAllTextAsync(Filter);
 
-                    if (GITHUBFILTER is not null) {
-                        if (LOCALFILTER == GITHUBFILTER) {
-                            var FILTER = LOCALFILTER.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
-                            PROCESSFILTER = new HashSet<string>(FILTER, StringComparer.OrdinalIgnoreCase);
-
-                            DebugFile.INSERT($"[ProcessListManager] Local Process Filter is up to date.");
-                            DebugFile.INSERT($"[ProcessListManager] Local Process Filter loaded.");
+                    if (FilterStrings is not null) {
+                        if (FilterStringsFile == FilterStrings) {
+                            var FILTER = FilterStringsFile.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+                            FilterArray = new HashSet<string>(FILTER, StringComparer.OrdinalIgnoreCase);
+                            DBUG.INSERT($"[Filter] Local Process Filter loaded.", DEBUGLOGLEVEL.INFO);
                         } else {
-                            await File.WriteAllTextAsync(FILTERFILE, GITHUBFILTER);
-                            DebugFile.INSERT($"[ProcessListManager] Local Process Filter updated.");
+                            await File.WriteAllTextAsync(Filter, FilterStrings);
+                            DBUG.INSERT($"[Filter] Local Process Filter updated.", DEBUGLOGLEVEL.INFO);
 
-                            var FILTER = GITHUBFILTER.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
-                            PROCESSFILTER = new HashSet<string>(FILTER, StringComparer.OrdinalIgnoreCase);
+                            var FILTER = FilterStrings.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+                            FilterArray = new HashSet<string>(FILTER, StringComparer.OrdinalIgnoreCase);
 
-                            DebugFile.INSERT($"[ProcessListManager] Local Process Filter loaded.");
+                            DBUG.INSERT($"[Filter] Local Process Filter loaded.", DEBUGLOGLEVEL.INFO);
                         }
                     } else {
-                        var FILTER = LOCALFILTER.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
-                        PROCESSFILTER = new HashSet<string>(FILTER, StringComparer.OrdinalIgnoreCase);
+                        var FILTER = FilterStringsFile.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+                        FilterArray = new HashSet<string>(FILTER, StringComparer.OrdinalIgnoreCase);
 
-                        DebugFile.INSERT($"[ProcessListManager] Local Process Filter could not be updated.");
-                        if (FILTER.Length > 0) DebugFile.INSERT($"[ProcessListManager] Local Process Filter loaded."); 
-                        else DebugFile.INSERT($"[ProcessListManager] Local Process Filter is empty.");
+                        DBUG.INSERT($"[ProcessListManager] Local Process Filter could not be updated.", DEBUGLOGLEVEL.WARNING);
+                        if (FILTER.Length > 0) DBUG.INSERT($"[ProcessListManager] Local Process Filter loaded.", DEBUGLOGLEVEL.INFO); 
+                        else DBUG.INSERT($"[ProcessListManager] Local Process Filter is empty.", DEBUGLOGLEVEL.WARNING);
 
                         MessageBox.Show("Local Process Filter update failed.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
@@ -125,69 +128,60 @@ namespace ParoxInjector.Classes {
             }
         }
 
-        public static async Task SHOW(MainWindow MAINWINDOW) {
-            CLEARPROCESSLIST(MAINWINDOW);
-            if (PROCESSFILTER == null) await UPDATEPROCESSFILTER();
-            await CREATE(MAINWINDOW);
+        public static async Task Refresh(MainWindow MAINWINDOW) {
+            ClearFilterPass(MAINWINDOW);
+            if (FilterArray == (HashSet<string>) []) await PopulateFilter();
+            await FilterPass(MAINWINDOW);
         }
 
-        public static async Task REFRESH(object SENDER, RoutedEventArgs ROUTEDEVENTARGS, MainWindow MAINWINDOW) {
-            CLEARPROCESSLIST(MAINWINDOW);
-            if (PROCESSFILTER == null) await UPDATEPROCESSFILTER();
-            await CREATE(MAINWINDOW);
+        public static async Task RoutedRefresh(object SENDER, RoutedEventArgs ROUTEDEVENTARGS, MainWindow Window) {
+            ClearFilterPass(Window);
+            if (FilterArray == (HashSet<string>) []) await PopulateFilter();
+            await FilterPass(Window);
         }
 
-        private static async Task CREATE(MainWindow MAINWINDOW) {
-            var PROCESSLIST = new HashSet<int>();
+        private static async Task FilterPass(MainWindow Window) {
+            var Verified = new HashSet<int>();
 
-            if (PROCESSFILTER == null) await UPDATEPROCESSFILTER();
+            if (FilterArray == (HashSet<string>) []) await PopulateFilter();
 
             await Task.Run(() => {
-                foreach (var PROCESS in Process.GetProcesses()) {
-                    if (PROCESSFILTER != null && PROCESSFILTER.Contains(PROCESS.ProcessName) || PROCESSLIST.Contains(PROCESS.Id)) continue;
+                foreach (var Process in Process.GetProcesses()) {
+                    if (FilterArray.Contains(Process.ProcessName)) continue;
 
-                    var PARENTPROCESS = PROCESS.GETPARENTPROCESS();
-                    if (PARENTPROCESS != null && PROCESSLIST.Contains(PARENTPROCESS.Id)) continue;
+                    var PARENTPROCESS = Process.ParentProcess();
+                    if (PARENTPROCESS != null && Verified.Contains(PARENTPROCESS.Id)) continue;
 
-                    var PROCESSINFO = new ProcessInfoClass {
-                        PROCESSID = PROCESS.Id,
-                        PROCESSNAME = PROCESS.ProcessName,
-                        WINDOWTITLE = PROCESS.MainWindowTitle,
-                        ICON = PROCESS.GETICON() ?? SystemIcons.Application
+                    var ProcessInfo = new ProcessInfo {
+                        ID = Process.Id,
+                        Name = Process.ProcessName,
+                        Title = Process.MainWindowTitle,
+                        Icon = Process.GetIcon() ?? SystemIcons.Application
                     };
 
                     Application.Current.Dispatcher.Invoke(() => {
-                        var ITEM = new ListBoxItem {
-                            Content = $"{PROCESSINFO.PROCESSNAME} (Process ID: {PROCESSINFO.PROCESSID})",
-                            Tag = PROCESSINFO
+                        var Process = new ListBoxItem {
+                            Content = $"{ProcessInfo.Name} (Process ID: {ProcessInfo.ID})",
+                            Tag = ProcessInfo
                         };
 
-                        var GRID = new Grid();
-                        GRID.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(40) });
-                        GRID.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+                        var ProcessContent = new Grid();
+                        ProcessContent.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(40) });
+                        ProcessContent.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
 
-                        var BITMAP = PROCESSINFO.ICON.ToBitmap();
-                        var IMAGE = new System.Windows.Controls.Image { Source = BITMAP.BITMAPASIMAGESOURCE(), Width = 32, Height = 32 };
+                        var ProcessIcon = new System.Windows.Controls.Image { Source = ProcessInfo.Icon.ToBitmap().CONVERT(), Width = 32, Height = 32 };
+                        var ProcessInfoBlock = new TextBlock { Text = $"{ProcessInfo.Name} (Process ID: {ProcessInfo.ID})", Style = (Style)Application.Current.Resources["ProcessInfoTextBlock"] };
 
-                        Grid.SetColumn(IMAGE, 0);
-                        GRID.Children.Add(IMAGE);
+                        Grid.SetColumn(ProcessIcon, 0);
+                        ProcessContent.Children.Add(ProcessIcon);
+                        Grid.SetColumn(ProcessInfoBlock, 1);
+                        ProcessContent.Children.Add(ProcessInfoBlock);
 
-                        var PID = new TextBlock {
-                            Text = $"{PROCESSINFO.PROCESSNAME} (Process ID: {PROCESSINFO.PROCESSID})",
-                            VerticalAlignment = VerticalAlignment.Center,
-                            HorizontalAlignment = HorizontalAlignment.Center,
-                            FontFamily = new System.Windows.Media.FontFamily("Global Monospace"),
-                            Foreground = new SolidColorBrush(Colors.White),
-                        };
+                        Process.Content = ProcessContent;
+                        Process.Tag = ProcessInfo;
+                        Window.FilterPass.Items.Add(Process);
 
-                        Grid.SetColumn(PID, 1);
-                        GRID.Children.Add(PID);
-
-                        ITEM.Content = GRID;
-                        ITEM.Tag = PROCESSINFO;
-                        MAINWINDOW.PROCESSLIST.Items.Add(ITEM);
-
-                        PROCESSLIST.Add(PROCESS.Id);
+                        Verified.Add(ProcessInfo.ID);
                     });
                 }
             });
