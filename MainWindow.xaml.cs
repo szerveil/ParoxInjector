@@ -17,17 +17,18 @@ namespace ParoxInjector
 
         // No extra functions, FilterClass.RoutedRefresh() is for Refresh touchDelegate event
         private void SetWindowDebug(object? SENDER, EventArgs EVENTARGS) {
-            if (DBUG.SetWindowDebug() == DBUG.DEBUGFLAGS.None) DBUG.INSERT($"[Window] Loaded.", DEBUGLOGLEVEL.INFO);
+            if (DBUG.SetWindowDebug() == DBUG.DEBUGFLAGS.None) DBUG.INSERT($"Window Loaded.", DEBUGLOGLEVEL.INFO);
         }
         private Task PopulateFilter(object? SENDER, EventArgs EVENTARGS) => FilterClass.PopulateFilter();
         private Task Refresh(object? SENDER, EventArgs EVENTARGS) => FilterClass.Refresh(this);
         private async void RoutedRefresh(object SENDER, RoutedEventArgs EVENTARGS) => await FilterClass.RoutedRefresh(SENDER, EVENTARGS, this);
-        private void WINDOWCLOSING(object? SENDER, CancelEventArgs EVENTARGS) => DBUG.INSERT($"[Window] Window Closed.", DEBUGLOGLEVEL.INFO);
+        private void WINDOWCLOSING(object? SENDER, CancelEventArgs EVENTARGS) => DBUG.INSERT($"Window Closed.", DEBUGLOGLEVEL.INFO);
 
         private async void ONCONTENTRENDERED(object? SENDER, EventArgs EVENTARGS) {
             SetWindowDebug(SENDER, EVENTARGS);
             await PopulateFilter(SENDER, EVENTARGS);
             await Refresh(SENDER, EVENTARGS);
+            REFRESH(SENDER, EVENTARGS);
         }
 
         private async void PROCESSLIST_SELECTIONCHANGED(object SENDER, SelectionChangedEventArgs SELECTIONCHANGEDEVENTARGS) {
@@ -40,6 +41,7 @@ namespace ParoxInjector
                         PROCESSID.Text = PROCESSINFO.ID.ToString();
                         PROCESSNAME.Text = PROCESSINFO.Name;
                         await FilterClass.Refresh(this);
+                        REFRESH(SENDER, SELECTIONCHANGEDEVENTARGS);
                     }
                 }
             }
@@ -64,10 +66,10 @@ namespace ParoxInjector
                 Hooks Hook = new Hooks();
                 Hook.HookProcess(ProcessID, DLLPath);
 
-                DBUG.INSERT($"[InjectManager] {PROCESSNAME} (PID: {ProcessID}) not found", DEBUGLOGLEVEL.INFO);
+                DBUG.INSERT($"{PROCESSNAME} (PID: {ProcessID}) not found", DEBUGLOGLEVEL.INFO);
                 await FilterClass.Refresh(this);
             }
-            catch (Exception EXCEPTION) { DBUG.INSERT("[InjectManager] Failed.", DEBUGLOGLEVEL.ERROR, EXCEPTION); }
+            catch (Exception EXCEPTION) { DBUG.INSERT("Failed.", DEBUGLOGLEVEL.ERROR, EXCEPTION); }
         }
 
         private void TOPDRAG(object SENDER, MouseButtonEventArgs MOUSEBUTTONEVENTARGS) => WindowContentManager.TOPDRAG(SENDER, MOUSEBUTTONEVENTARGS, this);
