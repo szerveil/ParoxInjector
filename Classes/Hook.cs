@@ -3,7 +3,7 @@ using System.Text;
 using System.Windows;
 
 namespace ParoxInjector.Classes {
-    internal class InjectManager {
+    internal class Hooks {
         [DllImport("kernel32.dll", SetLastError = true)]
         private static extern nint OpenProcess(uint processAccess, bool bInheritHandle, int processId);
 
@@ -29,21 +29,21 @@ namespace ParoxInjector.Classes {
         private const uint MEM_COMMIT = 0x00001000;
         private const uint PAGE_READWRITE = 0x04;
 
-        public void LOAD(int PID, string DLLPATH) {
-            IntPtr PROCESSH = OpenProcess(PROCESS_ALL_ACCESS, false, PID);
+        public void HookProcess(int ProcessID, string DLLPath) {
+            IntPtr PROCESSH = OpenProcess(PROCESS_ALL_ACCESS, false, ProcessID);
             if (PROCESSH == IntPtr.Zero) {
                 MessageBox.Show("Failed to open process.");
                 throw new Exception("Failed.");
             }
 
-            IntPtr BASEADDRESS = VirtualAllocEx(PROCESSH, IntPtr.Zero, (uint)DLLPATH.Length, MEM_COMMIT, PAGE_READWRITE);
+            IntPtr BASEADDRESS = VirtualAllocEx(PROCESSH, IntPtr.Zero, (uint)DLLPath.Length, MEM_COMMIT, PAGE_READWRITE);
             if (BASEADDRESS == IntPtr.Zero) {
                 MessageBox.Show("Failed to allocate memory.");
                 CloseHandle(PROCESSH);
                 throw new Exception("Failed.");
             }
 
-            byte[] BYTES = Encoding.ASCII.GetBytes(DLLPATH);
+            byte[] BYTES = Encoding.ASCII.GetBytes(DLLPath);
             IntPtr BYTESWRITTEN;
 
             bool RESULT = WriteProcessMemory(PROCESSH, BASEADDRESS, BYTES, (uint)BYTES.Length, out BYTESWRITTEN);
