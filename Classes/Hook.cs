@@ -32,12 +32,14 @@ namespace ParoxInjector.Classes {
         public void HookProcess(int ProcessID, string DLLPath) {
             IntPtr PROCESSH = OpenProcess(PROCESS_ALL_ACCESS, false, ProcessID);
             if (PROCESSH == IntPtr.Zero) {
+                DBUG.INSERT($"OpenProcess failed with error code: {Marshal.GetLastWin32Error()}", DEBUGLOGLEVEL.ERROR);
                 MessageBox.Show("Failed to open process.");
                 throw new Exception("Failed.");
             }
 
             IntPtr BASEADDRESS = VirtualAllocEx(PROCESSH, IntPtr.Zero, (uint)DLLPath.Length, MEM_COMMIT, PAGE_READWRITE);
             if (BASEADDRESS == IntPtr.Zero) {
+                DBUG.INSERT($"VirtualAllocEx failed with error code: {Marshal.GetLastWin32Error()}", DEBUGLOGLEVEL.ERROR);
                 MessageBox.Show("Failed to allocate memory.");
                 CloseHandle(PROCESSH);
                 throw new Exception("Failed.");
@@ -48,6 +50,7 @@ namespace ParoxInjector.Classes {
 
             bool RESULT = WriteProcessMemory(PROCESSH, BASEADDRESS, BYTES, (uint)BYTES.Length, out BYTESWRITTEN);
             if (!RESULT) {
+                DBUG.INSERT($"WriteProcessMemory failed with error code: {Marshal.GetLastWin32Error()}", DEBUGLOGLEVEL.ERROR);
                 MessageBox.Show("Failed to write to process memory.");
                 CloseHandle(PROCESSH);
                 throw new Exception("Failed.");
@@ -55,6 +58,7 @@ namespace ParoxInjector.Classes {
 
             IntPtr MODULE = GetProcAddress(GetModuleHandle("kernel32.dll"), "LoadLibraryA");
             if (MODULE == IntPtr.Zero) {
+                DBUG.INSERT($"GetProcAddress failed with error code: {Marshal.GetLastWin32Error()}", DEBUGLOGLEVEL.ERROR);
                 MessageBox.Show("Failed to get LoadLibrary address.");
                 CloseHandle(PROCESSH);
                 throw new Exception("Failed.");
@@ -62,6 +66,7 @@ namespace ParoxInjector.Classes {
 
             IntPtr THREAD = CreateRemoteThread(PROCESSH, IntPtr.Zero, 0, MODULE, BASEADDRESS, 0, out _);
             if (THREAD == IntPtr.Zero) {
+                DBUG.INSERT($"CreateRemoteThread failed with error code: {Marshal.GetLastWin32Error()}", DEBUGLOGLEVEL.ERROR);
                 MessageBox.Show("Failed to create remote thread.");
                 CloseHandle(PROCESSH);
                 throw new Exception("Failed.");
