@@ -92,8 +92,8 @@ namespace ParoxInjector.Classes {
             if (!File.Exists(Filter)) {
                 try {
                     await File.WriteAllTextAsync(Filter, FilterStrings);
-                    DBUG.INSERT($"[ProcessListManager] FilterStrings Populated.", DEBUGLOGLEVEL.INFO);
-                } catch { DBUG.INSERT($"[ProcessListManager] FilterStrings failed to Populate.", DEBUGLOGLEVEL.ERROR); }
+                    DBUG.INSERT($"[Filter] FilterStrings Populated.", DEBUGLOGLEVEL.INFO);
+                } catch { DBUG.INSERT($"[Filter] FilterStrings failed to Populate.", DEBUGLOGLEVEL.ERROR); }
             }
 
             if (File.Exists(Filter)) {
@@ -118,9 +118,9 @@ namespace ParoxInjector.Classes {
                         var FILTER = FilterStringsFile.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
                         FilterArray = new HashSet<string>(FILTER, StringComparer.OrdinalIgnoreCase);
 
-                        DBUG.INSERT($"[ProcessListManager] Local Process Filter could not be updated.", DEBUGLOGLEVEL.WARNING);
+                        DBUG.INSERT($"[Filter] Local Process Filter could not be updated.", DEBUGLOGLEVEL.WARNING);
                         if (FILTER.Length > 0) DBUG.INSERT($"[ProcessListManager] Local Process Filter loaded.", DEBUGLOGLEVEL.INFO); 
-                        else DBUG.INSERT($"[ProcessListManager] Local Process Filter is empty.", DEBUGLOGLEVEL.WARNING);
+                        else DBUG.INSERT($"[Filter] Local Process Filter is empty.", DEBUGLOGLEVEL.WARNING);
 
                         MessageBox.Show("Local Process Filter update failed.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
