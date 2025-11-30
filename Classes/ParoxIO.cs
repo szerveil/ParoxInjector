@@ -32,7 +32,7 @@ namespace ParoxInjector.Classes {
         }
         public static string fetchPath(string FileName) { 
             try {
-                string DirectoryPath = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) ?? "", FileName);
+                string DirectoryPath = Path.Combine(AppContext.BaseDirectory, FileName);
                 return DirectoryPath;
             } catch (Exception ex) {
                 DBUG.INSERT($"Error getting path: {ex.Message}", DEBUGLOGLEVEL.ERROR, ex);
