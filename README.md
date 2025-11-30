@@ -13,3 +13,5 @@
 <h>> Fixed multiple major bugs from v1.0.0, EX: hooking to apps crashing everything and the refresh list freezing up.</h>
 
 <h>> AS OF v2.0.0, THE RECENTS TAB IS UNAVAILABLE, ON v1.0.0 it still works.</h>
+
+<h>> v2.0.0 bugs fixed 11/30/25. RECENT tab is back, just don't overflow it.</h>
