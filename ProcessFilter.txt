@@ -91,6 +91,7 @@ gamingservicesnet
 git-cmd
 googleplaygamesservices
 hyp
+hyphelper
 idle
 intelsoftwareassetmanagerservice
 iracingservice64
@@ -114,7 +115,7 @@ memory compression
 microsoft.servicehub.controller
 microsoftedgeupdate
 microsoftstartfeedprovider
-monotifcationux
+monotificationux
 mousocoreworker
 mpcmdrun
 mpdefendercoreservice
