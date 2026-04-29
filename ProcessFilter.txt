@@ -34,6 +34,7 @@ brightnesscontrol
 cc_engine_x64
 cefsharp.browsersubprocess
 chxsmartscreen
+claude
 cloudflare warp
 cmd
 comppkgsrv
@@ -41,6 +42,7 @@ conhost
 copilot
 copilot-language-server
 cortexlauncherservice
+cowork-svc
 crashhandler
 crashpad_handler
 crossdeviceresume
@@ -54,6 +56,7 @@ dataexchangehost
 dcv2
 devenv
 discord
+discordsystemhelper
 dllhost
 dsaservice
 dsaupdateservice
@@ -76,6 +79,7 @@ fontdrvhost
 gamebar
 gamebarftserver
 gamebarpresencewriter
+gameinputredistservice
 gameinputsvc
 gamemanagerservice
 gamemanagerservice3
@@ -85,6 +89,8 @@ gameoverlayui64
 gamingservices
 gamingservicesnet
 git-cmd
+googleplaygamesservices
+hyp
 idle
 intelsoftwareassetmanagerservice
 iracingservice64
@@ -108,6 +114,7 @@ memory compression
 microsoft.servicehub.controller
 microsoftedgeupdate
 microsoftstartfeedprovider
+monotifcationux
 mousocoreworker
 mpcmdrun
 mpdefendercoreservice
@@ -223,6 +230,7 @@ servicehub.testwindowstorehost
 servicehub.threadedwaitdialog
 servicehub.vsdetouredhost
 services
+setup
 sgrmbroker
 shellexperiencehost
 shellhost
@@ -261,6 +269,7 @@ vctip
 vcxprojreader
 virtualdesktop.service
 virtualdesktop.streamer
+vmcompute
 vpnsvc
 vshost
 wallpaper32
