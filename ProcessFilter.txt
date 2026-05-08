@@ -4,6 +4,7 @@ afwserv
 aggregatorhost
 amdfendrsr
 antimatter dimensions
+appactions
 applicationframehost
 appvshnotify
 armouryaiofanserver
@@ -69,6 +70,7 @@ eadesktop
 ealocalhostsvc
 edgegameassist
 epicgameslauncher
+epiconlineserviceuserhelper
 epicwebhelper
 explorer
 filecoauth
@@ -76,6 +78,7 @@ fishtrap
 fl32
 fl64
 fontdrvhost
+fpsrunner
 gamebar
 gamebarftserver
 gamebarpresencewriter
@@ -115,6 +118,7 @@ memory compression
 microsoft.servicehub.controller
 microsoftedgeupdate
 microsoftstartfeedprovider
+midisrv
 monotificationux
 mousocoreworker
 mpcmdrun
@@ -145,6 +149,7 @@ nvidia overlay
 nvsphelper64
 officeclicktorun
 onedrive
+onenotem
 openconsole
 overwolf
 overwolfbrowser
@@ -164,8 +169,11 @@ qtwebengineprocess
 razer central
 razer synapse 3
 razer synapse service
+razer_elevation_service
+razerappengine
 razeraxon
 razercentralservice
+razercortex
 rdrleakdiag
 registry
 remotedesktopcompanion
