@@ -176,6 +176,7 @@ razerappengine
 razeraxon
 razercentralservice
 razercortex
+razerwdl
 rdrleakdiag
 registry
 remotedesktopcompanion
